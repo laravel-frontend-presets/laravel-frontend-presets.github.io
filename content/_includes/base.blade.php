@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+    <meta name="description" content="@yield('pageDescription', $siteDescription)">
 
-    <title>Laravel Frontend Presets </title>
+    <title>{{$siteName}} @yield('pageTitle')</title>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/7.0.0/markdown-it.min.js" ></script>
@@ -18,16 +18,32 @@
 </head>
 
 <body>
+
+@if($currentUrlPath == '/')
+    <div class="wow">
+        <img src="@url('/assets/logo.png')"
+             alt="Laravel Frontend Presets">
+        <h1>Laravel Frontend Presets</h1>
+        <h2>A collection of custom presets for Laravel 5.5</h2>
+        <a href="https://github.com/laravel-frontend-presets">
+            GitHub
+        </a>
+        <i>&nbsp&nbsp.&nbsp&nbsp</i>
+        <a href="https://packagist.org/packages/laravel-frontend-presets">
+            Packagist
+        </a>
+    </div>
+@else
     <div id="header">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <a href="/">
-                        <img src="/assets/logo.png"
+                    <a href="@url('/')">
+                        <img src="@url('/assets/logo.png')"
                              alt="Laravel Frontend Presets">
                     </a>
 
-                    <h1><a href="/">Laravel Frontend Presets</a></h1>
+                    <h1><a href="@url('/')">Laravel Frontend Presets</a></h1>
                 </div>
                 <div class="col-md-6 text-right buttons">
                     <a href="https://github.com/laravel-frontend-presets">
@@ -41,58 +57,16 @@
             </div>
         </div>
     </div>
+@endif
 
 <div class="container">
 
     <div class="row">
         <div class="col-md-2">
-            <ul class="menu-list">
-    <li><a href="/">Contributing</a></li>
-</ul>
-
-<p class="menu-label">Presets</p>
-<ul class="menu-list">
-    <li><a href="/zurb-foundation/">Zurb Foundation</a></li>
-    <li><a href="/bulma/">Bulma</a></li>
-    <li><a href="/uikit3/">UIKit 3</a></li>
-    <li><a href="/primercss/">Primer CSS</a></li>
-</ul>
+            @include('_includes.sidebar')
         </div>
         <div class="col-md-10 realContent">
-                <style>
-    .realContent p:first-of-type {
-        display: none;
-    }
-</style>
-
-<script>
-    var file = 'uikit3',
-        baseURL = 'https://raw.githubusercontent.com/laravel-frontend-presets/' + file + '/master/README.md';
-
-    $.get(baseURL, function (data) {
-        var md = window.markdownit();
-        var result = md.render(data);
-
-        $('.realContent').append(result);
-
-        ['Usage'].forEach(function (title) {
-            $('.realContent').find("h2:contains(" + title + ")").next('ul').remove();
-            $('.realContent').find("h2:contains(" + title + ")").remove();
-        });
-        Prism.highlightAll();
-    });
-</script>
-
-
-<div class="row options">
-    <div class="col-md-6">
-        <a class="btn btn-default" href="https://github.com/laravel-frontend-presets/uikit3">
-            <i class="fa fa-github"></i> GitHub
-        </a>
-        &nbsp;&nbsp; | &nbsp;&nbsp;
-        <a href="https://github.com/laravel-frontend-presets/uikit3/edit/master/README.md" style="opacity: 0.4;">Edit</a>
-    </div>
-</div>
+            @yield('body')
         </div>
     </div>
 </div>
@@ -100,7 +74,7 @@
 <footer>
     <div class="container">
         <div class="content">
-            &copy; Copyright 2017 Laravel Frontend Presets
+            &copy; Copyright {{date('Y')}} Laravel Frontend Presets
         </div>
     </div>
 </footer>
