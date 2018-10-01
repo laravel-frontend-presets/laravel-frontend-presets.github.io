@@ -85,6 +85,11 @@
             $('.realContent').find("h2:contains(" + title + ")").remove();
         });
 
+        $('.realContent').find("img").each(function (index) {
+            $(this).attr("src", ("https://raw.githubusercontent.com/laravel-frontend-presets/" + file + "/master" + $(this).attr('src')))
+        });
+        $('.realContent').find("img").addClass('img-responsive');
+
         Prism.highlightAll();
     });
 </script>
